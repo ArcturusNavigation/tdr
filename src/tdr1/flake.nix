@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mkTypstDerivation = {
+      url = "github:youwen5/mkTypstDerivation.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -17,6 +22,7 @@
       nixpkgs,
       typix,
       flake-utils,
+      mkTypstDerivation,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -24,6 +30,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         typixLib = typix.lib.${system};
+        mkTypstDerivationLib = import mkTypstDerivation { inherit pkgs; };
 
         src = ./.;
         commonArgs = {
@@ -31,30 +38,16 @@
           fontPaths = [ ];
           virtualPaths = [ ];
         };
-        generatePackagePaths = builtins.map (x: "packages/preview/" + x);
-        typst-packages = pkgs.fetchFromGitHub {
-          owner = "typst";
-          repo = "packages";
-          rev = "c73b8832d4281d55dc1f3c139bc239a6083ed6a3";
-          hash = "sha256-3eWlCxPdic0sZ0o/9yTxWtswtaa7SBQ8nufaKfF5pNA=";
 
-          sparseCheckout = generatePackagePaths [
-            "touying"
-            "cetz"
-            "cetz-plot"
-            "oxifmt"
-          ];
+        typstPackages = mkTypstDerivationLib.fetchTypstPackages {
+          inherit src;
+          documentRoot = commonArgs.typstSource;
+          hash = "sha256-H5ZokVNH+L168TCrA08UneffhmJr6IXdmrCFt+6jvn0=";
         };
-        typstPackagesSrc = pkgs.symlinkJoin {
-          name = "typst-packages-src";
-          paths = [
-            "${typst-packages}/packages"
-            # more typst packages can be added here
-          ];
-        };
+
         typstPackagesCache = pkgs.stdenv.mkDerivation {
           name = "typst-packages-cache";
-          src = typstPackagesSrc;
+          src = "${typstPackages}/typst/packages";
           dontBuild = true;
           installPhase = ''
             mkdir -p "$out/typst/packages"

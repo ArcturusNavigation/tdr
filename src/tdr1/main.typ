@@ -191,7 +191,7 @@ There are some important differences, however (this is the *interpretability cri
 #pause
 
 - Docker is *slow*, Nix is *fast*
-  - About 10x faster compared to the ROS development environment @purvis_2022
+  - About 5x faster compared to the ROS development environment @purvis_2022
 
 #pause
 
@@ -280,7 +280,7 @@ Due to the severe shock that would result from hacking on Nix code in the primar
 
 #pause
 
-- *Verifiable* (benefit from safe binary caching and reprroduce tests on other systems)
+- *Verifiable* (benefit from safe binary caching and reproduce tests on other systems)
 
 #pagebreak()
 

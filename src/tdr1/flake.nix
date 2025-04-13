@@ -13,7 +13,7 @@
   };
 
   outputs =
-    inputs@{
+    {
       nixpkgs,
       typix,
       flake-utils,

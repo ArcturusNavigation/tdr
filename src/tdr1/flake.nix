@@ -10,11 +10,6 @@
     };
 
     flake-utils.url = "github:numtide/flake-utils";
-
-    typst-packages = {
-      url = "github:typst/packages";
-      flake = false;
-    };
   };
 
   outputs =
@@ -36,10 +31,24 @@
           fontPaths = [ ];
           virtualPaths = [ ];
         };
+        generatePackagePaths = builtins.map (x: "packages/preview/" + x);
+        typst-packages = pkgs.fetchFromGitHub {
+          owner = "typst";
+          repo = "packages";
+          rev = "c73b8832d4281d55dc1f3c139bc239a6083ed6a3";
+          hash = "sha256-3eWlCxPdic0sZ0o/9yTxWtswtaa7SBQ8nufaKfF5pNA=";
+
+          sparseCheckout = generatePackagePaths [
+            "touying"
+            "cetz"
+            "cetz-plot"
+            "oxifmt"
+          ];
+        };
         typstPackagesSrc = pkgs.symlinkJoin {
           name = "typst-packages-src";
           paths = [
-            "${inputs.typst-packages}/packages"
+            "${typst-packages}/packages"
             # more typst packages can be added here
           ];
         };

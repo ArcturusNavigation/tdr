@@ -104,7 +104,7 @@ and we want software to run the same way on any system, regardless of its intern
 
 #pagebreak()
 
-- There is an indirect relationship between $Z$ and $X$, and we want to find $h : X → Z$
+- There is an indirect relationship between $Z$ and $X$, and we want to find $h : X → F Z$
   #pause
   - $h := f >>= g$
   #pause

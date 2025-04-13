@@ -18,7 +18,7 @@ Essentially, this work is and must remain open access and the original should be
 
 If you don't have Nix, you should [install it](https://github.com/DeterminateSystems/nix-installer). It will be [quite useful](https://github.com/orgs/ArcturusNavigation/repositories?q=lang%3Anix&type=all).
 
-This project uses the [Nix](https://nixos.org) build system with [Typix](https://loqusion.github.io/typix/) for declarative and reproducible [Typst](https://typst.app/) document builds. Run the following commands to build and preview any document within this repository:
+This project uses the [Nix](https://nixos.org) build system with [Typix](https://loqusion.github.io/typix/) for declarative and reproducible [Typst](https://typst.app/) document builds. The [Stargazer theme](https://touying-typ.github.io/docs/themes/stargazer) for [Touying](https://touying-typ.github.io/) is used for most presentations. Run the following commands to build and preview any document within this repository:
 
 ```sh
 cd src/<document>
